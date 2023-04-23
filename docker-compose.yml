@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    environment:
+      CONNECTION_STRING: mongodb://teste123:e296cd9f@localhost:27017/admin?authSource=admin
+      STOCK_COLLECTION: STOCKS
+      FIAT_COLLECTION: FIATS
+      DATABASE: CUSTOM_COMMAND
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_HOST: localhost:5672/
+      RABBITMQ_STOCK_QUEUE: stock-command-queue
+      RABBITMQ_FIAT_QUEUE: fiat-command-queue
+      RABBITMQ_EXCHANGE: command-exchange
+      RABBITMQ_DLQ_EXCHANGE: command-exchange-dlq
+      RABBITMQ_DLQ_QUEUE: command-queue-dlq
+      RABBITMQ_TTL: 5000
+      RABBITMQ_FIAT_ROUTING_KEY: fiat-routing
+      RABBITMQ_STOCK_ROUTING_KEY: stock-routing
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: teste123
+      MONGO_INITDB_ROOT_PASSWORD: e296cd9f
+    networks:
+      - mongo-compose-network
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+networks: 
+    mongo-compose-network:
+      driver: bridge
