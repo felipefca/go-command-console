@@ -9,6 +9,8 @@ Aplicação que lê dados de collections no MongoDB e envia para exchange com ro
 
 Aplicação que lê dados de duas collections no MongoDB e utilizando canais e goroutines faz o envio paralelizado para uma exchange com DLQ usando diferentes routingkeys 
 
+![img](https://user-images.githubusercontent.com/21323326/233877399-487d793c-76b4-445b-88fd-111c94145c26.png)
+
 ### Utilizando
 
 * [![Go][Go-badge]][Go-url]
